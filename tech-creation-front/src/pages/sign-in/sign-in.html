@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Connexion</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="signInForm">
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Identifiant</ion-label>
+        <ion-input type="email" formControlName="identifiant"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Mot de passe</ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+      </ion-item>
+    </ion-list>
+    <button ion-button full (click)="onSubmitSignInForm()">Se connecter</button>
+  </form>
+  <a>Mot de passe oublié ?</a>
+  <a [navPush]="signUpPage">Pas encore de compte ?</a>
+</ion-content>

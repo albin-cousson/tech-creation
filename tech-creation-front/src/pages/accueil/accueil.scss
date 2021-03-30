@@ -1,0 +1,36 @@
+page-accueil {
+    ion-card, .card-ios  {
+        background: #488aff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 18px;
+        .cardHeader {
+            display: flex;
+            ion-card-header {
+                color: #FFF;
+                padding-left: 0;
+            }
+            ion-card-content {
+                color: #98bbf8;
+                padding-left: 0;
+            }
+            div img {
+                padding: 16px;
+                padding-right: 12px;                
+            }
+        }
+        .cardContent {
+            display: flex;
+            flex-direction: column;
+            ion-card-header {
+                color: #FFF;
+                text-align: end;
+            }
+            ion-card-content {
+                color:  #7adbf8;
+                text-align: end;
+            }
+        }
+    } 
+}

@@ -1,0 +1,7 @@
+{
+  "name": "tech-creation",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "ionic-angular"
+}

@@ -1,0 +1,22 @@
+page-sign-up {
+    .item-ios {
+        padding-left: 0;
+    }
+    .checkbox {
+        display: flex;
+        ion-item{
+            display: flex;
+            flex-direction: column;
+        }
+        .item.item-ios .checkbox-ios{
+            margin-right: 0;
+            margin-left: 0;
+        }
+        .item-ios.item-block .item-inner{
+            padding-right: 0;
+            ion-label{
+                margin-right: 0;
+            }
+        }
+    }
+}

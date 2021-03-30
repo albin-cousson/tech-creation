@@ -1,0 +1,99 @@
+<!--
+  Generated template for the SignUpPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>Fiche d'inscription</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="signUpForm">
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Identifiant*</ion-label>
+        <ion-input type="text" formControlName="identifiant"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Mot de passe*</ion-label>
+        <ion-input type="text" formControlName="password"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Nom*</ion-label>
+        <ion-input type="text" formControlName="nom"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Prénom*</ion-label>
+        <ion-input type="text" formControlName="prenom"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Lieu de naissance*</ion-label>
+        <ion-input type="text" formControlName="lieuDeNaissance"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Date de naissance*</ion-label>
+        <ion-datetime displayFormat="DD:MM:YYYY" formControlName="dateDeNaissance"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Nationalité*</ion-label>
+      <ion-select multiple="true" cancelText="Annuler" okText="Valider" formControlName="nationalite">
+          <ion-option value="nes">NES</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Sexe*</ion-label>
+        <ion-select multiple="true" cancelText="Annuler" okText="Valider" formControlName="sexe">
+          <ion-option value="nes">NES</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Adresse*</ion-label>
+        <ion-input type="text" formControlName="adresse"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Pays*</ion-label>
+        <ion-select multiple="true" cancelText="Annuler" okText="Valider" formControlName="pays">
+          <ion-option value="nes">NES</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Code postale*</ion-label>
+        <ion-input type="text" formControlName="codePostale"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Ville*</ion-label>
+        <ion-input type="text" formControlName="ville"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Tèl. fixe*</ion-label>
+        <ion-input type="text" formControlName="telFixe"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Tèl. mobile*</ion-label>
+        <ion-input type="text" formControlName="telMobile"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Email*</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
+      <div class="checkbox"> 
+        <ion-item>
+          <ion-label>Épargne</ion-label>
+          <ion-checkbox item-right formControlName="epargne"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>Serveur mining</ion-label>
+          <ion-checkbox item-right formControlName="serveurMining"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>Carte</ion-label>
+          <ion-checkbox item-right formControlName="carte"></ion-checkbox>
+        </ion-item>
+      </div>
+    </ion-list>
+    <button ion-button full (click)="onSubmitSignUpForm()">S'inscrire</button>
+  </form>
+</ion-content>
