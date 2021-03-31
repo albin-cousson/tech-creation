@@ -1,24 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from '../../services/api.service'
+import { TabsPage } from '../tabs/tabs';
 import { UtilisateurModel } from '../../models/Utilisateur.model';
+import { Subscription } from 'rxjs/Subscription';
+import { AlertController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
   selector: 'page-sign-up',
   templateUrl: 'sign-up.html',
 })
-export class SignUpPage implements OnInit {
+export class SignUpPage implements OnInit, OnDestroy {
 
   signUpForm: FormGroup;
   signUpModel: UtilisateurModel;
+  _auth = new Boolean(); 
+  authSubscription: Subscription;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private apiService: ApiService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private apiService: ApiService, private alertCtrl: AlertController) {
   }
 
   ngOnInit() {
     this.signUpFormBuilder();
+    this.authSubscription = this.apiService.authSubject.subscribe(
+      (res: boolean)=>{
+        this._auth = res;    
+      }
+    )
+    this.apiService.emitAuthSubject();
   }
 
   signUpFormBuilder() {
@@ -83,8 +94,28 @@ export class SignUpPage implements OnInit {
         epargne, serveurMining, carte
       ],
     }    
-    this.apiService.postSignUpFromServer(this.signUpModel);
+    this.apiService.postSignUpFromServer(this.signUpModel)
+    .then(()=>{
+      if(this._auth == true){
+        this.navCtrl.setRoot(TabsPage);
+      } else {
+        let alert = this.alertCtrl.create({
+          title: 'Identifiant ou mot de passe érroné',
+          buttons: [
+            {
+              text: 'Ok',
+              role: 'cancel'
+            }
+          ]
+        });
+        alert.present();
+      }
+    })
     //this.navCtrl.setRoot(TabsPage);
   } 
+
+  ngOnDestroy() {
+    this.authSubscription.unsubscribe();
+  }
 
 }
