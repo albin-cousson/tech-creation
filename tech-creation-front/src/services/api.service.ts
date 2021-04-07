@@ -1,14 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { UtilisateurModel } from '../models/Utilisateur.model';
-import { AuthModel } from '../models/Auth';
+import { AuthModel } from '../models/Auth.model';
 import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class ApiService {
 
+    ip = "http://localhost:3000";
+
     auth = new Boolean();
     authSubject = new Subject();
+    user = new Array();
+    userSubject = new Subject();
+    epargne = new Array();
+    epargneSubject = new Subject();
+    serveurMining = new Array();
+    serveurMiningSubject = new Subject();
     token: string;
     userId: string;
 
@@ -17,7 +25,7 @@ export class ApiService {
     postSignUpFromServer(utilisateur: UtilisateurModel) {
       return new Promise((resolve, reject)=>{
         this.http
-          .post('http://localhost:3000/api/sign-up', utilisateur)
+          .post(this.ip+'/api/sign-up', utilisateur)
           .subscribe(
             (res: { token: string, userId: string }) => {
               this.auth = true; 
@@ -38,7 +46,7 @@ export class ApiService {
     postSignInFromServer(auth: AuthModel) {
       return new Promise((resolve, reject)=>{
         this.http
-        .post('http://localhost:3000/api/sign-in', auth)
+        .post(this.ip+'/api/sign-in', auth)
         .subscribe(
           (res: { token: string, userId: string }) => {
             this.auth = true; 
@@ -56,6 +64,57 @@ export class ApiService {
       })
     }
 
+    getUserFromServer(tokenAndUserId) {
+      return new Promise((resolve, reject)=>{
+        this.http
+        .post(this.ip+'/api/souscription/user', tokenAndUserId)
+        .subscribe(
+          (res: any) => {
+            this.user = res;
+            this.emitUserSubject();
+            resolve(console.log('Connexion réussi'));
+          },
+          (error) => {
+            resolve(console.log('Erreur ! : ' + error)); 
+          },
+        )
+      })
+    }
+
+    getEpargneFromServer(tokenAndUserId) {
+      return new Promise((resolve, reject)=>{
+        this.http
+        .post(this.ip+'/api/souscription/epargne', tokenAndUserId)
+        .subscribe(
+          (res: any) => {
+            this.epargne = res;
+            this.emitEpargneSubject();
+            resolve(console.log('Connexion réussi'));
+          },
+          (error) => {
+            resolve(console.log('Erreur ! : ' + error)); 
+          },
+        )
+      })
+    }
+
+    getServeurMiningFromServer(tokenAndUserId) { 
+      return new Promise((resolve, reject)=>{
+        this.http
+        .post(this.ip+'/api/souscription/serveurMining', tokenAndUserId)
+        .subscribe(
+          (res: any) => {
+            this.serveurMining = res;
+            this.emitServeurMiningSubject();
+            resolve(console.log('Connexion réussi'));
+          },
+          (error) => { 
+            resolve(console.log('Erreur ! : ' + error)); 
+          },
+        )
+      }) 
+    }
+
     signOut() {
       this.auth = false;
       this.emitAuthSubject();
@@ -65,5 +124,17 @@ export class ApiService {
 
     emitAuthSubject() { 
       this.authSubject.next(this.auth);
+    }
+
+    emitUserSubject() {
+      this.userSubject.next(this.user)
+    }
+
+    emitEpargneSubject() {
+      this.epargneSubject.next(this.epargne);
+    }
+
+    emitServeurMiningSubject() {
+      this.serveurMiningSubject.next(this.serveurMining);
     }
 } 

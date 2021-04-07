@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ApiService } from '../../services/api.service'
 import { TabsPage } from '../tabs/tabs';
 import { SignUpPage } from '../sign-up/sign-up'
-import { AuthModel } from '../../models/Auth'
+import { AuthModel } from '../../models/Auth.model'
 import { Subscription } from 'rxjs/Subscription';
 import { AlertController } from 'ionic-angular';
 

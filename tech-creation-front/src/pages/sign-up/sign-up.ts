@@ -19,6 +19,11 @@ export class SignUpPage implements OnInit, OnDestroy {
   _auth = new Boolean(); 
   authSubscription: Subscription;
 
+  //valeur des checkbox 
+  epargne = false;
+  serveurMining = false;
+  carte = false;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private apiService: ApiService, private alertCtrl: AlertController) {
   }
 
@@ -90,9 +95,11 @@ export class SignUpPage implements OnInit, OnDestroy {
       telFixe: telFixe,
       telPortable: telPortable,
       email: email,
-      souscription: [
-        epargne, serveurMining, carte
-      ],
+      souscription: {
+        epargne: epargne, 
+        serveurMining: serveurMining, 
+        carte: carte
+      },
     }    
     this.apiService.postSignUpFromServer(this.signUpModel)
     .then(()=>{

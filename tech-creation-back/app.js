@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const signUpRoute = require('./routes/sign-up')
 const signInRoute = require('./routes/sign-in')
+const userSpaceRoute = require('./routes/user-space')
  
 const app = express();
 
@@ -23,5 +24,6 @@ app.use(express.json());
 
 app.use('/api/sign-up', signUpRoute);
 app.use('/api/sign-in', signInRoute);
+app.use('/api/souscription', userSpaceRoute);
 
 module.exports = app; 
