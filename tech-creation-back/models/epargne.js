@@ -10,5 +10,4 @@ const epargneSchema = mongoose.Schema({
   gainMois: { type: String },
 });
 
-
 module.exports = mongoose.model('Epargne', epargneSchema);

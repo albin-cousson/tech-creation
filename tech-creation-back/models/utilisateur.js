@@ -2,22 +2,22 @@ const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
 const utilisateurSchema = mongoose.Schema({
-  identifiant: { type: String,  unique: true },
-  password: { type: String,  },
-  nom: { type: String,  },
-  prenom: { type: String,  },
-  lieuDeNaissance: { type: String,  },
-  dateDeNaissance: { type: String,  },
-  nationalite: { type: Array,  },
-  sexe: { type: Array,  },
-  adresse: { type: String,  },
-  pays: { type: Array,  },
-  codePostale: { type: String,  },
-  ville: { type: String,  },
-  telFixe: { type: String,  },
-  telPortable: { type: String,  },
-  email: { type: String,},
-  souscription: { type: Array,  },
+  identifiant: { type: String, require:true,  unique: true },
+  password: { type: String, require:true, },
+  nom: { type: String, require:true, },
+  prenom: { type: String, require:true, },
+  lieuDeNaissance: { type: String, require:true, },
+  dateDeNaissance: { type: String, require:true, },
+  nationalite: { type: Array, require:true, },
+  sexe: { type: Array, require:true, },
+  adresse: { type: String, require:true, },
+  pays: { type: Array, require:true, },
+  codePostale: { type: String, require:true, },
+  ville: { type: String, require:true, },
+  telFixe: { type: String, require:true, },
+  telPortable: { type: String, require:true, },
+  email: { type: String, require:true, },
+  souscription: { type: Array, require:true, },
 });
 
 utilisateurSchema.plugin(uniqueValidator);

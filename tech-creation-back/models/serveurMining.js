@@ -9,5 +9,4 @@ const serveurMiningSchema = mongoose.Schema({
   gainMois: { type: String },
 });
 
-
 module.exports = mongoose.model('ServeurMining', serveurMiningSchema);
