@@ -15,7 +15,7 @@ export class ActuComponent implements OnInit, OnDestroy {
 
   actu: MatTableDataSource<any>;
   actuSubscription: Subscription;
-  actuDisplayColumns: string[] = ['nom', 'prenom', 'date', 'article', 'like', 'commentaire', 'modifier', 'supprimer'];
+  actuDisplayColumns: string[] = ['nomDuRedacteur', 'prenomDuRedacteur', 'imageDuRedacteurUrl', 'dateDeCreation', 'titre', 'imageHeaderUrl', 'textArticle', 'imageArticleUrl', 'like', 'commentaire', 'modifier', 'supprimer'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   addActuFormGroup: FormGroup;  
@@ -29,7 +29,9 @@ export class ActuComponent implements OnInit, OnDestroy {
   imageArticelSubscription: Subscription;
 
   imagePreviewAddActu: string; 
+  imagePreviewAddActuForImageDuRedacteurUrl: string;
   imagePreviewPutActu: string;
+  imagePreviewPutActuForImageDuRedacteurUrl: string;
 
   addActu=false;
   putActu=false;
@@ -38,8 +40,12 @@ export class ActuComponent implements OnInit, OnDestroy {
     _id: "",
     nomDuRedacteur: "", 
     prenomDuRedacteur: "",
+    imageDuRedacteurUrl: "",
     dateDeCreation: "", 
-    text: "",
+    titre: "", 
+    imageHeaderUrl: "", 
+    textArticle: "", 
+    imageArticleUrl: "",
     like: "",
     commentaire: "" 
   };
@@ -78,19 +84,29 @@ export class ActuComponent implements OnInit, OnDestroy {
     this.addActuFormGroup = this.formBuilder.group({
       nomDuRedacteur: ['', Validators.required],
       prenomDuRedacteur: ['', Validators.required],
+      imageDuRedacteurUrl: [null, Validators.required],
       dateDeCreation: ['', Validators.required],
-      image: [null, Validators.required],
-      text: ['', Validators.required] 
+      titre: ['', Validators.required],
+      imageHeaderUrl: [null, Validators.required],
+      textArticle: ['', Validators.required],
+      imageArticleUrl: ['', Validators.required] ,
+      like: ['', Validators.required],
+      commentaire: ['', Validators.required],
     }) 
   }
  
   buildPutActuFormGroup() {
     this.putActuFormGroup = this.formBuilder.group({
-      nomDuRedacteur: ['', Validators.required], 
+      nomDuRedacteur: ['', Validators.required],
       prenomDuRedacteur: ['', Validators.required],
+      imageDuRedacteurUrl: [null, Validators.required],
       dateDeCreation: ['', Validators.required],
-      image: [null, Validators.required],
-      text: ['', Validators.required] 
+      titre: ['', Validators.required],
+      imageHeaderUrl: [null, Validators.required],
+      textArticle: ['', Validators.required],
+      imageArticleUrl: ['', Validators.required] ,
+      like: ['', Validators.required],
+      commentaire: ['', Validators.required],
     }) 
   }
 
@@ -104,69 +120,107 @@ export class ActuComponent implements OnInit, OnDestroy {
     const actu: ActuModel = { 
       nomDuRedacteur: this.addActuFormGroup.get('nomDuRedacteur').value,
       prenomDuRedacteur: this.addActuFormGroup.get('prenomDuRedacteur').value,
+      imageDuRedacteurUrl: '',
       dateDeCreation: this.addActuFormGroup.get('dateDeCreation').value,
-      imageUrl: '',
-      text: this.addActuFormGroup.get('text').value,
+      titre: this.addActuFormGroup.get('titre').value, 
+      imageHeaderUrl: '',
+      textArticle: this.addActuFormGroup.get('textArticle').value,
+      imageArticleUrl: '',
       like: "",
       commentaire: [] 
     }   
-    this.apiService.postActuFromServer(actu, this.addActuFormGroup.get('image').value).then(
+    this.apiService.postActuFromServer(actu, this.addActuFormGroup.get('imageDuRedacteurUrl').value, this.addActuFormGroup.get('imageHeaderUrl').value).then(
       ()=>{
-        this.addActuFormGroup.get('image').reset();
+        this.addActuFormGroup.get('imageDuRedacteurUrl').reset();
+        this.addActuFormGroup.get('imageHeaderUrl').reset();
       }
     );
   }
+
+  onImagePickAddActuForImageDuRedacteurUrl(event: Event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.addActuFormGroup.get('imageDuRedacteurUrl').patchValue(file);
+    this.addActuFormGroup.get('imageDuRedacteurUrl').updateValueAndValidity();
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (this.addActuFormGroup.get('imageDuRedacteurUrl').valid) {
+        this.imagePreviewAddActuForImageDuRedacteurUrl = reader.result as string;
+      } else {
+        this.imagePreviewAddActuForImageDuRedacteurUrl = null;
+      }
+    };
+    reader.readAsDataURL(file);
+  } 
  
   onImagePickAddActu(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
-    this.addActuFormGroup.get('image').patchValue(file);
-    this.addActuFormGroup.get('image').updateValueAndValidity();
+    this.addActuFormGroup.get('imageHeaderUrl').patchValue(file);
+    this.addActuFormGroup.get('imageHeaderUrl').updateValueAndValidity();
     const reader = new FileReader();
     reader.onload = () => {
-      if (this.addActuFormGroup.get('image').valid) {
+      if (this.addActuFormGroup.get('imageHeaderUrl').valid) {
         this.imagePreviewAddActu = reader.result as string;
       } else {
         this.imagePreviewAddActu = null;
       }
     };
     reader.readAsDataURL(file);
-  }
+  } 
      
   onSubmitPutActuFormGroup() {
     const actu: ActuModel = {  
       nomDuRedacteur: this.putActuFormGroup.get('nomDuRedacteur').value,
       prenomDuRedacteur: this.putActuFormGroup.get('prenomDuRedacteur').value,
-      dateDeCreation: this.putActuFormGroup.get('dateDeCreation').value, 
-      imageUrl: '',
-      text: this.putActuFormGroup.get('text').value,
+      imageDuRedacteurUrl: '',
+      dateDeCreation: this.putActuFormGroup.get('dateDeCreation').value,
+      titre: this.putActuFormGroup.get('titre').value,
+      imageHeaderUrl: '',
+      textArticle: this.putActuFormGroup.get('textArticle').value,
+      imageArticleUrl: '',
       like: "",
       commentaire: [] 
     } 
-    console.log(this.putActuFormGroup.get('image').value);
-    
-    this.apiService.putActuFromServer(this.actuForPut._id, actu, this.putActuFormGroup.get('image').value) 
+    this.apiService.putActuFromServer(this.actuForPut._id, actu, this.putActuFormGroup.get('imageDuRedacteurUrl').value, this.putActuFormGroup.get('imageHeaderUrl').value).then(()=>{
+      this.putActuFormGroup.get('imageDuRedacteurUrl').reset();
+      this.putActuFormGroup.get('imageHeaderUrl').reset();
+    }) 
   }
+
+  onImagePickPutActuForImageDuRedacteurUrl(event: Event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.putActuFormGroup.get('imageDuRedacteurUrl').patchValue(file);
+    this.putActuFormGroup.get('imageDuRedacteurUrl').updateValueAndValidity();
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (this.putActuFormGroup.get('imageDuRedacteurUrl').valid) {
+        this.imagePreviewPutActuForImageDuRedacteurUrl = reader.result as string;
+      } else {
+        this.imagePreviewPutActuForImageDuRedacteurUrl = null;
+      }
+    };
+    reader.readAsDataURL(file);
+  } 
 
   onImagePickPutActu(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
-    this.putActuFormGroup.get('image').patchValue(file);
-    this.putActuFormGroup.get('image').updateValueAndValidity();
+    this.putActuFormGroup.get('imageHeaderUrl').patchValue(file);
+    this.putActuFormGroup.get('imageHeaderUrl').updateValueAndValidity();
     const reader = new FileReader();
     reader.onload = () => {
-      if (this.putActuFormGroup.get('image').valid) {
+      if (this.putActuFormGroup.get('imageHeaderUrl').valid) { 
         this.imagePreviewPutActu = reader.result as string;
       } else {
-        this.imagePreviewPutActu = null;
+        this.imagePreviewPutActu = null; 
       } 
-    }; 
+    };  
     reader.readAsDataURL(file);
   }
  
   onImagePickPutImageArticleActu(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
-    this.putActuFormImageArticleGroup.get('image').patchValue(file);
-    this.putActuFormImageArticleGroup.get('image').updateValueAndValidity();
-    this.apiService.postActuImageArticleFromServer(this.putActuFormImageArticleGroup.get('image').value).then(
+    this.putActuFormImageArticleGroup.get('imageHeaderUrl').patchValue(file);
+    this.putActuFormImageArticleGroup.get('imageHeaderUrl').updateValueAndValidity();
+    this.apiService.postActuImageArticleFromServer(this.putActuFormImageArticleGroup.get('imageHeaderUrl').value).then(
       ()=>{
         var input = document.querySelector("textarea");
         var startPos = input.selectionStart;
@@ -184,15 +238,20 @@ export class ActuComponent implements OnInit, OnDestroy {
     );
   }
 
-  actuForPutFnct(actu_id, actuNomDuRedacteur, actuPrenomDuRedacteur, actuDateDeCreation, actuImageUrl, actuText) {
+  actuForPutFnct(actu_id, actuNomDuRedacteur, actuPrenomDuRedacteur, actuImageDuRedacteurUrl, actuDateDeCreation, actuTitre, actuImageHeaderUrl, actuTextArticle, actuImageArticleUrl, actuLike, actuCommentaire) {
     this.actuForPut._id = actu_id;
     this.actuForPut.nomDuRedacteur = actuNomDuRedacteur;
     this.actuForPut.prenomDuRedacteur = actuPrenomDuRedacteur; 
+    this.imagePreviewPutActuForImageDuRedacteurUrl = actuImageDuRedacteurUrl; 
     this.actuForPut.dateDeCreation = actuDateDeCreation;
-    this.imagePreviewPutActu = actuImageUrl;
-    this.actuForPut.text = actuText;
+    this.actuForPut.titre = actuTitre;
+    this.imagePreviewPutActu = actuImageHeaderUrl;
+    this.actuForPut.textArticle = actuTextArticle;
+    this.actuForPut.imageArticleUrl = actuImageArticleUrl;
+    this.actuForPut.like = actuLike;
+    this.actuForPut.commentaire = actuCommentaire;
   } 
- 
+  
   deleteActuFromServer(actu_id) {
     this.apiService.deleteActuFromServer(actu_id); 
   }

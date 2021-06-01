@@ -36,17 +36,18 @@ export class ApiService {
     })
   }
 
-  postActuFromServer(actu: ActuModel, image: File) {
+  postActuFromServer(actu: ActuModel, imageDuRedacteurUrl: File, imageHeaderUrl: File) { 
     return new Promise((resolve, reject)=>{
       const actugData = new FormData();
       actugData.append('actu', JSON.stringify(actu));
-      actugData.append('image', image, actu.nomDuRedacteur);
+      actugData.append('image', imageDuRedacteurUrl);
+      actugData.append('image', imageHeaderUrl);
       this.httpClient
         .post(this.ip+'/api/actu/add', actugData)
         .subscribe(
           () => {
             this.getActuFromServer();
-            resolve(console.log('Inscription réussi'));
+            resolve(console.log('Inscription réussi')); 
           },
           (error) => {
             resolve(console.log('Erreur ! : ' + error));
@@ -75,15 +76,27 @@ export class ApiService {
     })
   }
 
-  putActuFromServer(actu_id, actu: ActuModel, image: File) {
+  putActuFromServer(actu_id, actu: ActuModel, imageDuRedacteurUrl: File, imageHeaderUrl: File) {
     return new Promise((resolve, reject)=>{ 
       const actugData = new FormData();
+      let imageDuRedacteur;
+      let imageHeader;
       actugData.append('actu', JSON.stringify(actu));
-      try {
-        actugData.append('image', image, actu.nomDuRedacteur);
+      for(let i=0;i<this.actu.length;i++){
+        if(actu_id==this.actu[i]._id){
+          imageDuRedacteur = this.actu[i].imageDuRedacteurUrl 
+          imageHeader = this.actu[i].imageHeaderUrl;
+        }
+      }  
+      if(imageDuRedacteurUrl!=null) {
+        actugData.append('image', imageDuRedacteurUrl);
+      } else {
+        actugData.append('imageDuRedacteurUrl', imageDuRedacteur)
       }
-      catch {
-        console.log('test');
+      if(imageHeaderUrl!=null) {
+        actugData.append('image', imageHeaderUrl);
+      } else { 
+        actugData.append('imageHeaderUrl', imageHeader)
       }
       this.httpClient
         .put(this.ip+'/api/actu/put/' + actu_id, actugData)

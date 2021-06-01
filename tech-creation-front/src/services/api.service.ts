@@ -17,6 +17,8 @@ export class ApiService {
     epargneSubject = new Subject();
     serveurMining = new Array();
     serveurMiningSubject = new Subject();
+    actu = new Array();
+    actuSubject = new Subject();
     token: string;
     userId: string;
 
@@ -113,6 +115,23 @@ export class ApiService {
           },
         )
       }) 
+    } 
+
+    getActuFromServer(tokenAndUserId) { 
+      return new Promise((resolve, reject)=>{
+        this.http
+        .post(this.ip+'/api/actu/read', tokenAndUserId)
+        .subscribe(
+          (res: any) => {
+            this.actu = res;
+            this.emitActuSubject();
+            resolve(console.log('Ok'));
+          },
+          (error) => { 
+            resolve(console.log('Erreur ! : ' + error)); 
+          },
+        )
+      }) 
     }
 
     signOut() {
@@ -136,5 +155,9 @@ export class ApiService {
 
     emitServeurMiningSubject() {
       this.serveurMiningSubject.next(this.serveurMining);
+    }
+
+    emitActuSubject() {
+      this.actuSubject.next(this.actu);
     }
 } 

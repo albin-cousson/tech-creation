@@ -8,7 +8,7 @@ import { SignInPage } from '../sign-in/sign-in';
 @Component({
   selector: 'page-accueil',
   templateUrl: 'accueil.html',
-})
+}) 
 export class AccueilPage implements OnInit, OnDestroy  {
 
   _auth = new Boolean(); 

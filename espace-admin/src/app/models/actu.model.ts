@@ -1,17 +1,23 @@
 export class ActuModel {
     nomDuRedacteur;
     prenomDuRedacteur;
+    imageDuRedacteurUrl
     dateDeCreation;
-    imageUrl;
-    text;
+    titre;
+    imageHeaderUrl;
+    textArticle;
+    imageArticleUrl;
     like;
     commentaire;
-    constructor(nomDuRedacteur, prenomDuRedacteur, dateDeCreation, imageUrl, text, like, commentaire) {
+    constructor(nomDuRedacteur, prenomDuRedacteur, imageDuRedacteurUrl, dateDeCreation, titre, imageHeaderUrl, textArticle, imageArticleUrl, like, commentaire) {
         this.nomDuRedacteur = nomDuRedacteur;
         this.prenomDuRedacteur = prenomDuRedacteur;
+        this.imageDuRedacteurUrl = imageDuRedacteurUrl;
         this.dateDeCreation = dateDeCreation;
-        this.imageUrl = imageUrl;
-        this.text = text;
+        this.titre = titre;
+        this.imageHeaderUrl = imageHeaderUrl;
+        this.textArticle = textArticle;
+        this.imageArticleUrl = imageArticleUrl;
         this.like = like;
         this.commentaire = commentaire;
     }

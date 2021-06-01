@@ -20,6 +20,12 @@ export class ActuPage implements OnInit, OnDestroy {
 
   _auth = new Boolean(); 
   authSubscription: Subscription;
+  tokenAndUserId = {
+    token: this.apiService.token,
+    userId: this.apiService.userId
+  };
+  actu = new Array();
+  actuSubscription: Subscription;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private apiService: ApiService) {
   }
@@ -29,11 +35,17 @@ export class ActuPage implements OnInit, OnDestroy {
       (res: boolean)=>{
         this._auth = res;  
         if(this._auth == false) {
-          this.navCtrl.setRoot(SignInPage);
+          this.navCtrl.setRoot(SignInPage); 
         }
-      }
+      } 
     )
     this.apiService.emitAuthSubject();
+    this.apiService.getActuFromServer(this.tokenAndUserId)
+    this.actuSubscription = this.apiService.actuSubject.subscribe((res:any)=>{
+      this.actu = res;
+      console.log(this.actu)
+    })
+    this.apiService.emitActuSubject();
   }
 
   ngOnDestroy() {
