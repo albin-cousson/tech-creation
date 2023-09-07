@@ -11,3 +11,4 @@ import { AccueilPage } from './accueil';
   ],
 })
 export class AccueilPageModule {}
+ 

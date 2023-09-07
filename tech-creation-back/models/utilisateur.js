@@ -2,22 +2,22 @@ const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
 const utilisateurSchema = mongoose.Schema({
-  identifiant: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  nom: { type: String, required: true },
-  prenom: { type: String, required: true },
-  lieuDeNaissance: { type: String, required: true },
-  dateDeNaissance: { type: String, required: true },
-  nationalite: { type: Array, required: true },
-  sexe: { type: Array, required: true },
-  adresse: { type: String, required: true },
-  pays: { type: Array, required: true },
-  codePostale: { type: String, required: true },
-  ville: { type: String, required: true },
-  telFixe: { type: String, required: true },
-  telPortable: { type: String, required: true },
-  email: { type: String, required: true },
-  souscription: { type: Array, required: true },
+  identifiant: { type: String, require:true,  unique: true },
+  password: { type: String, require:true, },
+  nom: { type: String, require:true, },
+  prenom: { type: String, require:true, },
+  lieuDeNaissance: { type: String, require:true, },
+  dateDeNaissance: { type: String, require:true, },
+  nationalite: { type: Array, require:true, },
+  sexe: { type: Array, require:true, },
+  adresse: { type: String, require:true, },
+  pays: { type: Array, require:true, },
+  codePostale: { type: String, require:true, },
+  ville: { type: String, require:true, },
+  telFixe: { type: String, require:true, },
+  telPortable: { type: String, require:true, },
+  email: { type: String, require:true, },
+  souscription: { type: Array, require:true, },
 });
 
 utilisateurSchema.plugin(uniqueValidator);

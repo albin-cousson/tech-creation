@@ -82,18 +82,19 @@
       <div class="checkbox"> 
         <ion-item>
           <ion-label>Épargne</ion-label>
-          <ion-checkbox item-right formControlName="epargne"></ion-checkbox>
+          <ion-checkbox item-right formControlName="epargne" [(ngModel)]="epargne"></ion-checkbox>
         </ion-item>
         <ion-item>
           <ion-label>Serveur mining</ion-label>
-          <ion-checkbox item-right formControlName="serveurMining"></ion-checkbox>
+          <ion-checkbox item-right formControlName="serveurMining" [(ngModel)]="serveurMining"></ion-checkbox>
         </ion-item>
         <ion-item>
           <ion-label>Carte</ion-label>
-          <ion-checkbox item-right formControlName="carte"></ion-checkbox>
+          <ion-checkbox item-right formControlName="carte" [(ngModel)]="carte"></ion-checkbox>
         </ion-item>
       </div>
     </ion-list>
     <button ion-button full (click)="onSubmitSignUpForm()">S'inscrire</button>
   </form>
 </ion-content>
+ 

@@ -1,0 +1,80 @@
+@import '~@angular/material/theming';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+$mat-myapp-primary: (
+    50 : #e9f1ff,
+    100 : #c8dcff,
+    200 : #a4c5ff,
+    300 : #7fadff,
+    400 : #639cff,
+    500 : #488aff,
+    600 : #4182ff,
+    700 : #3877ff,
+    800 : #306dff,
+    900 : #215aff,
+    A100 : #ffffff,
+    A200 : #ffffff,
+    A400 : #d0dbff,
+    A700 : #b7c7ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$mat-myapp-accent: (
+    50 : #e9f1ff,
+    100 : #c8dcff,
+    200 : #a4c5ff,
+    300 : #7fadff,
+    400 : #639cff,
+    500 : #488aff,
+    600 : #4182ff,
+    700 : #3877ff,
+    800 : #306dff,
+    900 : #215aff,
+    A100 : #ffffff,
+    A200 : #ffffff,
+    A400 : #d0dbff,
+    A700 : #b7c7ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+
+$primary: mat-palette($mat-myapp-primary);
+$accent: mat-palette($mat-myapp-accent);
+
+$theme: mat-light-theme($primary, $accent);
+
+@include angular-material-theme($theme);
+
